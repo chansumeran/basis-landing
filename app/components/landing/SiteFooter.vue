@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { links } from '~/utils/landing'
+import { exchanges, exchangesAnd, links } from '~/utils/landing'
 </script>
 
 <template>
@@ -17,7 +17,7 @@ import { links } from '~/utils/landing'
       </nav>
     </div>
     <div class="wrap pb-10">
-      <p class="max-w-[820px] text-[12px] leading-[18px] text-f3">basis is a journal, not financial advice, and it never places trades. MEXC and OKX are trademarks of their owners; basis is not affiliated with either exchange.</p>
+      <p class="max-w-[820px] text-[12px] leading-[18px] text-f3">basis is a journal, not financial advice, and it never places trades. {{ exchangesAnd }} are trademarks of their owners; basis is not affiliated with {{ exchanges.length > 2 ? 'any of these exchanges' : 'either exchange' }}.</p>
     </div>
   </footer>
 </template>

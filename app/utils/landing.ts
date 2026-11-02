@@ -1,5 +1,20 @@
 // Static data and helpers for the landing page, ported from the design's logic script.
 
+// The exchanges basis imports from, in the order the copy names them. Every list of them on the
+// page ("MEXC and OKX") comes from here, so adding one is a one-line change. Per-exchange facts
+// (key permissions, history limits) and the phone mockups' sample trades still name them directly.
+export const exchanges = ['MEXC', 'OKX']
+
+// "A and B", "A, B and C"
+function listOf(items: string[], word: 'and' | 'or') {
+  return items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} ${word} ${items.at(-1)}`
+}
+export const exchangesAnd = listOf(exchanges, 'and')
+export const exchangesOr = listOf(exchanges, 'or')
+
+// The search-result and social-preview description. Starts with the phrase people search for.
+export const description = `A private crypto trading journal for iOS. Imports your ${exchangesAnd} trades read-only and keeps them encrypted on your phone. No account, no cloud.`
+
 export interface MarkBar { x: number, y: number, w: number, cls: string, dl: string }
 
 const FG = 'fill-fg'
@@ -98,14 +113,14 @@ export const facts = [
 
 // At a glance strip under the hero.
 export const strip = [
-  { t: 'MEXC and OKX', s: 'Read-only API keys', d: 'M4 12a8 8 0 1 0 16 0a8 8 0 1 0-16 0M4 12h16M12 4c2.5 2.2 3.5 5 3.5 8s-1 5.8-3.5 8c-2.5-2.2-3.5-5-3.5-8s1-5.8 3.5-8z' },
+  { t: exchangesAnd, s: 'Read-only API keys', d: 'M4 12a8 8 0 1 0 16 0a8 8 0 1 0-16 0M4 12h16M12 4c2.5 2.2 3.5 5 3.5 8s-1 5.8-3.5 8c-2.5-2.2-3.5-5-3.5-8s1-5.8 3.5-8z' },
   { t: 'Perps and spot', s: 'Several accounts each', d: 'M5 19V11M10 19V5M15 19v-6M20 19V8' },
   { t: 'No account', s: 'No cloud, no tracking', d: 'M12 12a3.5 3.5 0 1 0 0-7a3.5 3.5 0 1 0 0 7zM5 20c.8-3.4 3.6-5.5 7-5.5s6.2 2.1 7 5.5M4 4l16 16' },
   { t: 'Encrypted on device', s: 'Locked with Face ID', d: 'M6.5 10.5h11v9h-11zM8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14v2' },
 ]
 
 export const steps = [
-  { n: '01', t: 'Connect a read-only key', b: 'Add a MEXC or OKX account as Perps or Spot and paste a key with Read access only. It stays in the iOS Keychain.' },
+  { n: '01', t: 'Connect a read-only key', b: `Add a ${exchangesOr} account as Perps or Spot and paste a key with Read access only. It stays in the iOS Keychain.` },
   { n: '02', t: 'Pull to sync', b: 'basis reads closed positions, fills, funding and balances, and shows each step as it finishes. Background sync keeps it current.' },
   { n: '03', t: 'Write the part only you know', b: 'Pick the strategy, tick the rules you kept, tag mistakes and emotions, set the planned stop, add a screenshot. basis turns it into R and patterns.' },
 ]
@@ -322,7 +337,7 @@ export const priv = [
 export const onPhone = ['Encrypted database (SQLCipher)', 'API keys in the iOS Keychain', 'Face ID or passcode lock', 'Backups sealed with your passphrase']
 
 export const faq = [
-  { q: 'Which exchanges does basis support?', a: 'MEXC and OKX (the global site), for both perpetual futures and spot. Each account you add imports Perps or Spot, and you can add several per exchange with their own names.' },
+  { q: 'Which exchanges does basis support?', a: `${exchangesAnd}, for both perpetual futures and spot (for OKX, the global site). Each account you add imports Perps or Spot, and you can add several per exchange with their own names.` },
   { q: 'Can basis place trades or move my funds?', a: 'No. basis only reads. Create your API key with Read access only and leave Trade and Withdraw off. OKX keys with trade or withdraw permission are refused; MEXC doesn’t tell an app what a key can do, so it’s up to you to create it read-only.' },
   { q: 'Where is my data stored?', a: 'Only on your phone, in an encrypted database. There is no basis account and no basis server. The app only connects to your exchanges to sync (looking their addresses up over Cloudflare’s encrypted DNS), and to nothing else. Widgets read a small summary the app leaves them and never contact an exchange.' },
   { q: 'How far back does it import?', a: 'As far as each exchange’s API allows. OKX returns about three months of history. MEXC returns spot fills for the last 30 days only, so basis keeps syncing in the background to build your history from there.' },

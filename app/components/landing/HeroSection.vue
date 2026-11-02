@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { vrows } from '~/utils/landing'
+import { exchangesAnd, vrows } from '~/utils/landing'
 </script>
 
 <template>
@@ -17,7 +17,7 @@ import { vrows } from '~/utils/landing'
     <div class="wrap hero-copy relative z-[1] flex flex-col items-center gap-7 pt-[104px] text-center max-sm:gap-5 max-sm:pt-14">
       <span class="eyebrow in1">Crypto trading journal for iOS</span>
       <h1 class="in2 max-w-[920px] text-[72px] leading-[74px] font-bold tracking-[-.04em] max-sm:text-[44px] max-sm:leading-[48px]">Every trade, journaled. Nothing leaves your phone.</h1>
-      <p class="lead in3 max-w-[540px]">basis imports your MEXC and OKX trades with a read-only API key and keeps them encrypted on your phone. You only write the part the exchange can’t: the plan, the rules you kept, and what it cost when you didn’t.</p>
+      <p class="lead in3 max-w-[540px]">basis imports your {{ exchangesAnd }} trades with a read-only API key and keeps them encrypted on your phone. You only write the part the exchange can’t: the plan, the rules you kept, and what it cost when you didn’t.</p>
       <div class="in4 flex flex-wrap justify-center gap-3 max-sm:w-full max-sm:flex-col">
         <a href="#download" class="btn max-sm:w-full">
           <LandingIcon d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14" :size="20" :stroke="2" />

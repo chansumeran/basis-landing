@@ -1,21 +1,52 @@
 <script setup lang="ts">
+import { description, faq, prices } from '~/utils/landing'
+
 const { themeClass } = useLandingTheme()
 useSystemColorScheme()
 
-const description = 'basis imports your MEXC and OKX trades with a read-only API key and keeps them encrypted on your phone. No account, no cloud.'
 const siteUrl = useRuntimeConfig().public.siteUrl.replace(/\/$/, '')
 useSeoMeta({
   description,
   ogType: 'website',
   ogSiteName: 'basis',
-  ogTitle: 'basis — private crypto trading journal for iOS',
+  ogTitle: 'Private crypto trading journal for iOS — basis',
   ogDescription: description,
   ogImage: `${siteUrl}/og.png`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogImageAlt: 'basis: Every trade, journaled. Nothing leaves your phone.',
-  ogUrl: siteUrl || undefined,
+  ogUrl: siteUrl ? `${siteUrl}/` : undefined,
   twitterCard: 'summary_large_image',
+})
+// Structured data so search engines know this page is about an iOS app, what it costs and what
+// the FAQ answers. Prices are the dollar ones the page renders before usePrice runs.
+useHead({
+  link: siteUrl ? [{ rel: 'canonical', href: `${siteUrl}/` }] : [],
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'MobileApplication',
+          'name': 'basis',
+          description,
+          'operatingSystem': 'iOS',
+          'applicationCategory': 'FinanceApplication',
+          'offers': { '@type': 'Offer', 'price': prices.default.replace('$', ''), 'priceCurrency': 'USD' },
+          ...(siteUrl && { url: `${siteUrl}/`, image: `${siteUrl}/og.png` }),
+        },
+        {
+          '@type': 'FAQPage',
+          'mainEntity': faq.map(({ q, a }) => ({
+            '@type': 'Question',
+            'name': q,
+            'acceptedAnswer': { '@type': 'Answer', 'text': a.replace('{price}', prices.default) },
+          })),
+        },
+      ],
+    }),
+  }],
 })
 const root = useTemplateRef<HTMLElement>('root')
 
@@ -84,18 +115,20 @@ onBeforeUnmount(() => {
 <template>
   <div ref="root" class="lp w-full overflow-x-clip bg-bg font-sans leading-[normal] text-fg antialiased" :class="themeClass">
     <LandingSiteHeader />
-    <LandingHeroSection />
-    <LandingGlanceStrip />
-    <LandingHowItWorks />
-    <LandingCalendarFeature />
-    <LandingAnalysisFeature />
-    <LandingPlaybookFeature />
-    <LandingShareCards />
-    <LandingWidgetsFeature />
-    <LandingMoreFeatures />
-    <LandingPrivacySection />
-    <LandingFaqSection />
-    <LandingDownloadCta />
+    <main>
+      <LandingHeroSection />
+      <LandingGlanceStrip />
+      <LandingHowItWorks />
+      <LandingCalendarFeature />
+      <LandingAnalysisFeature />
+      <LandingPlaybookFeature />
+      <LandingShareCards />
+      <LandingWidgetsFeature />
+      <LandingMoreFeatures />
+      <LandingPrivacySection />
+      <LandingFaqSection />
+      <LandingDownloadCta />
+    </main>
     <LandingSiteFooter />
   </div>
 </template>

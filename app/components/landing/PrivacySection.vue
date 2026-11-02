@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { links, onPhone, priv } from '~/utils/landing'
+import { exchangesAnd, links, onPhone, priv } from '~/utils/landing'
 
 // Data-flow connector: a dashed arrow, sideways on desktop and pointing down once the flow stacks.
 const conns = [
@@ -38,7 +38,7 @@ const nowhere = ['basis servers', 'Sign-up accounts', 'Analytics', 'Cloud sync']
         <div class="flex flex-col gap-2 rounded-2xl bg-bg p-5 inset-ring inset-ring-hair">
           <LandingIcon d="M4 9.5L12 4l8 5.5M5.5 10v8M10 10v8M14 10v8M18.5 10v8M3.5 20h17" class="text-f2" />
           <span class="text-[17px] font-semibold">Your exchange</span>
-          <span class="text-[14px] leading-5 text-f2">MEXC and OKX accounts you connect</span>
+          <span class="text-[14px] leading-5 text-f2">{{ exchangesAnd }} accounts you connect</span>
         </div>
 
         <template v-for="(c, i) in conns" :key="c.top">

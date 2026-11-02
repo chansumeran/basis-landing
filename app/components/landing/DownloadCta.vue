@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { links } from '~/utils/landing'
+import { exchangesAnd, links } from '~/utils/landing'
 </script>
 
 <template>
@@ -12,7 +12,7 @@ import { links } from '~/utils/landing'
         <LandingIcon d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14" :size="20" :stroke="2" />
         Get basis for iOS
       </a>
-      <span class="text-[14px] text-f3">iOS 17 or later · Works with MEXC and OKX</span>
+      <span class="text-[14px] text-f3">iOS 17 or later · Works with {{ exchangesAnd }}</span>
     </div>
   </section>
 </template>

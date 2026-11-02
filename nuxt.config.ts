@@ -4,18 +4,20 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  modules: ['@vercel/analytics/nuxt'],
   css: ['~/assets/css/main.css', '~/assets/css/landing.css'],
   runtimeConfig: {
     public: {
-      // The site's public origin, e.g. https://basis.app. Social previews need absolute
-      // image URLs, so set NUXT_PUBLIC_SITE_URL in production.
-      siteUrl: '',
+      // The site's public origin, e.g. https://basis.app. Social previews, the canonical link and
+      // the sitemap need absolute URLs. NUXT_PUBLIC_SITE_URL wins; on Vercel it falls back to the
+      // project's production domain.
+      siteUrl: process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '',
     },
   },
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-      title: 'basis — private crypto trading journal for iOS',
+      title: 'Private crypto trading journal for iOS — basis',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#0A0B0D', media: '(prefers-color-scheme: dark)' },
