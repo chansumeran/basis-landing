@@ -1,0 +1,158 @@
+/* What Tailwind utilities can't express for the landing page: the light colour set, keyframe
+   animations, scroll-driven reveals and the hero parallax. Everything else lives in the markup. */
+
+/* Light mode: the app's light colour set. Follows the system unless the toggle picks one. */
+.lp.light {
+  --color-bg: #F5F5F2; --color-s1: #FFFFFF; --color-s2: #E9E9E5; --color-s3: #DCDCD7;
+  --color-fg: #121316; --color-f2: #565961; --color-f3: #6E717A; --color-hair: rgba(0, 0, 0, .08);
+  --color-acc: #3F4FD1; --color-accbg: rgba(63, 79, 209, .10); --color-onacc: #FFFFFF;
+  --color-up: #0B8159; --color-dn: #CC3A26; --color-upbg: rgba(11, 129, 89, .13); --color-dnbg: rgba(204, 58, 38, .12);
+  --color-segon: #FFFFFF; --color-bez: #1D1E22;
+}
+@media (prefers-color-scheme: light) {
+  .lp:not(.dark) {
+    --color-bg: #F5F5F2; --color-s1: #FFFFFF; --color-s2: #E9E9E5; --color-s3: #DCDCD7;
+    --color-fg: #121316; --color-f2: #565961; --color-f3: #6E717A; --color-hair: rgba(0, 0, 0, .08);
+    --color-acc: #3F4FD1; --color-accbg: rgba(63, 79, 209, .10); --color-onacc: #FFFFFF;
+    --color-up: #0B8159; --color-dn: #CC3A26; --color-upbg: rgba(11, 129, 89, .13); --color-dnbg: rgba(204, 58, 38, .12);
+    --color-segon: #FFFFFF; --color-bez: #1D1E22;
+  }
+  body:has(.lp:not(.dark)) { background: #F5F5F2; }
+}
+body { background: #0A0B0D; }
+
+/* In-page nav links glide to their section instead of jumping, and stop below the 64px
+   sticky header. People who ask for reduced motion keep the instant jump. */
+html { scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+body:has(.lp.light) { background: #F5F5F2; }
+
+/* Motion */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+@keyframes rise { from { opacity: 0; transform: translateY(60px) scale(.97) } to { opacity: 1; transform: none } }
+@keyframes slideIn { from { opacity: 0; transform: translate(60px, 40px) rotate(2deg) } to { opacity: 1; transform: none } }
+@keyframes wave { 0%, 100% { transform: scaleX(1); opacity: 1 } 50% { transform: scaleX(.55); opacity: .45 } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-acc) 55%, transparent) } 60% { box-shadow: 0 0 0 7px transparent } }
+@keyframes syncBtn { 0%, 82% { transform: rotate(0) } 92%, 100% { transform: rotate(360deg) } }
+@keyframes rowIn { from { opacity: 0; transform: translateX(-14px) } to { opacity: 1; transform: none } }
+@keyframes grow { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes growY { from { transform: scaleY(0) } to { transform: scaleY(1) } }
+@keyframes popIn { from { opacity: 0; transform: scale(.6) } to { opacity: 1; transform: none } }
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes draw { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
+@keyframes drawLoop { 0% { stroke-dashoffset: 1; opacity: 1 } 22% { stroke-dashoffset: 0; opacity: 1 } 88% { stroke-dashoffset: 0; opacity: 1 } 96%, 100% { stroke-dashoffset: 0; opacity: 0 } }
+/* Chart fills popping in along the drawn line. */
+@keyframes dp1 { 0%, 6% { opacity: 0; transform: scale(0) } 9% { opacity: 1; transform: scale(1.5) } 11%, 88% { opacity: 1; transform: scale(1) } 96%, 100% { opacity: 0 } }
+@keyframes dp2 { 0%, 8% { opacity: 0; transform: scale(0) } 11% { opacity: 1; transform: scale(1.5) } 13%, 88% { opacity: 1; transform: scale(1) } 96%, 100% { opacity: 0 } }
+@keyframes dp3 { 0%, 12% { opacity: 0; transform: scale(0) } 15% { opacity: 1; transform: scale(1.5) } 17%, 88% { opacity: 1; transform: scale(1) } 96%, 100% { opacity: 0 } }
+@keyframes dp4 { 0%, 16% { opacity: 0; transform: scale(0) } 19% { opacity: 1; transform: scale(1.5) } 21%, 88% { opacity: 1; transform: scale(1) } 96%, 100% { opacity: 0 } }
+/* Sync screen: rows (lr), their checkmarks (lc) and spinners (ls) step through a 12s loop. */
+@keyframes lr1 { 0%, 4% { opacity: 0; transform: translateY(8px) } 8%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lr2 { 0%, 16% { opacity: 0; transform: translateY(8px) } 20%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lr3 { 0%, 28% { opacity: 0; transform: translateY(8px) } 32%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lr4 { 0%, 40% { opacity: 0; transform: translateY(8px) } 44%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lr5 { 0%, 52% { opacity: 0; transform: translateY(8px) } 56%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lr6 { 0%, 64% { opacity: 0; transform: translateY(8px) } 68%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lc1 { 0%, 14% { opacity: 0; transform: scale(.4) } 16%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lc2 { 0%, 26% { opacity: 0; transform: scale(.4) } 28%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lc3 { 0%, 38% { opacity: 0; transform: scale(.4) } 40%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lc4 { 0%, 50% { opacity: 0; transform: scale(.4) } 52%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lc5 { 0%, 62% { opacity: 0; transform: scale(.4) } 64%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes lc6 { 0%, 74% { opacity: 0; transform: scale(.4) } 76%, 93% { opacity: 1; transform: none } 98%, 100% { opacity: 0 } }
+@keyframes ls1 { 0%, 4% { opacity: 0 } 6%, 14% { opacity: 1 } 15%, 100% { opacity: 0 } }
+@keyframes ls2 { 0%, 16% { opacity: 0 } 18%, 26% { opacity: 1 } 27%, 100% { opacity: 0 } }
+@keyframes ls3 { 0%, 28% { opacity: 0 } 30%, 38% { opacity: 1 } 39%, 100% { opacity: 0 } }
+@keyframes ls4 { 0%, 40% { opacity: 0 } 42%, 50% { opacity: 1 } 51%, 100% { opacity: 0 } }
+@keyframes ls5 { 0%, 52% { opacity: 0 } 54%, 62% { opacity: 1 } 63%, 100% { opacity: 0 } }
+@keyframes ls6 { 0%, 64% { opacity: 0 } 66%, 74% { opacity: 1 } 75%, 100% { opacity: 0 } }
+@keyframes phaseA { 0%, 77% { opacity: 1 } 79%, 97% { opacity: 0 } 99%, 100% { opacity: 1 } }
+@keyframes phaseB { 0%, 77% { opacity: 0 } 79%, 96% { opacity: 1 } 98%, 100% { opacity: 0 } }
+
+.in1 { animation: fadeUp .7s cubic-bezier(.2, .7, .2, 1) .05s both }
+.in2 { animation: fadeUp .7s cubic-bezier(.2, .7, .2, 1) .15s both }
+.in3 { animation: fadeUp .7s cubic-bezier(.2, .7, .2, 1) .25s both }
+.in4 { animation: fadeUp .7s cubic-bezier(.2, .7, .2, 1) .35s both }
+.in5 { animation: fadeUp .7s cubic-bezier(.2, .7, .2, 1) .45s both }
+.p1 { animation: rise 1s cubic-bezier(.2, .7, .2, 1) .2s both }
+.p2 { animation: slideIn 1s cubic-bezier(.2, .7, .2, 1) .55s both }
+.rowin { animation: rowIn .5s cubic-bezier(.2, .7, .2, 1) both }
+.dotp { animation: pulse 2.2s ease-out infinite }
+.syncic { animation: syncBtn 6s cubic-bezier(.5, 0, .3, 1) 2s infinite }
+.grow-in { transform-origin: left center; animation: grow 1.1s cubic-bezier(.2, .7, .2, 1) 1.6s both }
+.drawloop { stroke-dasharray: 1; animation: drawLoop 10s cubic-bezier(.45, .05, .3, 1) 1.2s infinite both }
+.d1, .d2, .d3, .d4 { transform-box: fill-box; transform-origin: center }
+.d1 { animation: dp1 10s linear 1.2s infinite both }
+.d2 { animation: dp2 10s linear 1.2s infinite both }
+.d3 { animation: dp3 10s linear 1.2s infinite both }
+.d4 { animation: dp4 10s linear 1.2s infinite both }
+.lr1 { animation: lr1 12s ease infinite both } .lr2 { animation: lr2 12s ease infinite both } .lr3 { animation: lr3 12s ease infinite both }
+.lr4 { animation: lr4 12s ease infinite both } .lr5 { animation: lr5 12s ease infinite both } .lr6 { animation: lr6 12s ease infinite both }
+.lc1 { animation: lc1 12s ease infinite both } .lc2 { animation: lc2 12s ease infinite both } .lc3 { animation: lc3 12s ease infinite both }
+.lc4 { animation: lc4 12s ease infinite both } .lc5 { animation: lc5 12s ease infinite both } .lc6 { animation: lc6 12s ease infinite both }
+.ls1 { animation: ls1 12s linear infinite both } .ls2 { animation: ls2 12s linear infinite both } .ls3 { animation: ls3 12s linear infinite both }
+.ls4 { animation: ls4 12s linear infinite both } .ls5 { animation: ls5 12s linear infinite both } .ls6 { animation: ls6 12s linear infinite both }
+.phA { animation: phaseA 12s linear infinite both }
+.phB { animation: phaseB 12s linear infinite both }
+.pane-in { animation: fadeUp .35s cubic-bezier(.2, .7, .2, 1) both }
+.rbar { transform-origin: bottom; animation: growY .6s cubic-bezier(.2, .7, .2, 1) both }
+.wave rect { transform-box: fill-box; transform-origin: left center; animation: wave 1.3s ease-in-out infinite }
+
+/* Share replay video: a 6s loop. The line draws over the first 75%, each fill pops in when the
+   line reaches it (rp1–rp4, timed by its x position), the result shows near the end, then
+   everything fades and the loop restarts. */
+@keyframes replayDraw { 0% { stroke-dashoffset: 1; opacity: 1 } 75%, 94% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
+@keyframes replayReveal { 0%, 76% { opacity: 0; transform: translateY(8px) } 82%, 94% { opacity: 1; transform: none } 100% { opacity: 0 } }
+@keyframes replayProgress { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes replayRec { 0%, 100% { opacity: 1 } 50% { opacity: .25 } }
+@keyframes rp1 { 0%, 19% { opacity: 0; transform: scale(0) } 21% { opacity: 1; transform: scale(1.5) } 23%, 94% { opacity: 1; transform: scale(1) } 100% { opacity: 0 } }
+@keyframes rp2 { 0%, 24% { opacity: 0; transform: scale(0) } 26% { opacity: 1; transform: scale(1.5) } 28%, 94% { opacity: 1; transform: scale(1) } 100% { opacity: 0 } }
+@keyframes rp3 { 0%, 40% { opacity: 0; transform: scale(0) } 42% { opacity: 1; transform: scale(1.5) } 44%, 94% { opacity: 1; transform: scale(1) } 100% { opacity: 0 } }
+@keyframes rp4 { 0%, 54% { opacity: 0; transform: scale(0) } 56% { opacity: 1; transform: scale(1.5) } 58%, 94% { opacity: 1; transform: scale(1) } 100% { opacity: 0 } }
+.replay-line { stroke-dasharray: 1; animation: replayDraw 6s linear infinite both }
+.replay-reveal { animation: replayReveal 6s ease infinite both }
+.replay-progress { transform-origin: left center; animation: replayProgress 6s linear infinite both }
+.replay-rec { animation: replayRec 1s ease-in-out infinite }
+.rp1, .rp2, .rp3, .rp4 { transform-box: fill-box; transform-origin: center }
+.rp1 { animation: rp1 6s linear infinite both } .rp2 { animation: rp2 6s linear infinite both }
+.rp3 { animation: rp3 6s linear infinite both } .rp4 { animation: rp4 6s linear infinite both }
+
+/* Theme toggle: SiteHeader grows the new theme out from the button with a view transition, so the
+   default cross-fade is turned off. The icon spins in each time it's pressed. */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal }
+@keyframes themeSpin { from { opacity: 0; transform: rotate(-120deg) scale(.5) } to { opacity: 1; transform: none } }
+.theme-spin { animation: themeSpin .5s cubic-bezier(.2, .7, .2, 1) both }
+
+/* Hero V bars grow in from each edge. */
+.vl { transform-origin: left center; animation: grow 1s cubic-bezier(.2, .7, .2, 1) both }
+.vr { transform-origin: right center; animation: grow 1s cubic-bezier(.2, .7, .2, 1) both }
+
+/* Scroll-driven reveals where the browser supports them; elsewhere everything simply shows. */
+@supports (animation-timeline: view()) {
+  .reveal { animation: fadeUp linear both; animation-timeline: view(); animation-range: entry 0% entry 60% }
+  .pop { animation: popIn linear both; animation-timeline: view(); animation-range: entry 0% entry 100% }
+  .growv { transform-origin: left center; animation: grow linear both; animation-timeline: view(); animation-range: entry 20% cover 45% }
+  .drawv { stroke-dasharray: 1; animation: draw linear both; animation-timeline: view(); animation-range: entry 30% cover 50% }
+  .fadev { animation: fadeIn linear both; animation-timeline: view(); animation-range: cover 30% cover 50% }
+}
+
+/* The share cards stop revealing on scroll once they become a swipe carousel. */
+@media (width < 73.75rem) {
+  .shares .reveal { animation: none }
+}
+
+/* Hero parallax: the page sets --p on the hero from 0 (top of the page) to 1 (scrolled ~760px).
+   The copy drifts down and fades, the V opens and sinks, the phones straighten and rise at different speeds. */
+#top .hero-copy { transform: translateY(calc(var(--p, 0) * 180px)); opacity: calc(1 - var(--p, 0) * 1.3) }
+#top .vbars { transform: translateY(calc(var(--p, 0) * 240px)) }
+#top .sl { transform: translateX(calc(var(--p, 0) * -16vw)) }
+#top .sr { transform: translateX(calc(var(--p, 0) * 16vw)) }
+#top .floaty { transform-origin: 50% 0; will-change: transform }
+#top .p1 .floaty { transform: perspective(1800px) translateY(calc(40px - var(--p, 0) * 100px)) rotateX(calc(16deg - var(--p, 0) * 16deg)) scale(calc(.95 + var(--p, 0) * .05)) }
+#top .p2 .floaty { transform: perspective(1800px) translateY(calc(120px - var(--p, 0) * 170px)) rotateX(calc(16deg - var(--p, 0) * 16deg)) scale(calc(.95 + var(--p, 0) * .05)) }
+[data-par] { will-change: transform }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp *, .lp *::before, .lp *::after { animation: none !important; transition: none !important }
+}
